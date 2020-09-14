@@ -11,8 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 public class App {
 
@@ -47,21 +46,33 @@ public class App {
         return DriverManager.getConnection(defualtJdbcUrl);
 
     }
-    
+
     public static void main(String[] args) {
         try  {
             staticFiles.location("/public");
+            port(getHerokuAssignedPort());
 
-            Connection connection = getDatabaseConnection("jdbc:postgresql://localhost/spark_hbs_jdbi");
+//            Connection connection = getDatabaseConnection("jdbc:postgresql://localhost/spark_hbs_jdbi");
 
             get("/", (req, res) -> {
 
                 Map<String, Object> map = new HashMap<>();
-                map.put("name", "Andre");
+//                map.put("name", "Andre");
 
                 return new ModelAndView(map, "index.handlebars");
 
             }, new HandlebarsTemplateEngine());
+
+
+            post("/person", (req, res) -> {
+
+                System.out.println(req.queryParams("firstName"));
+                System.out.println(req.queryParams("lastName"));
+                System.out.println(req.queryParams("email"));
+
+                res.redirect("/");
+                return "";
+            });
 
         } catch (Exception ex) {
             ex.printStackTrace();
