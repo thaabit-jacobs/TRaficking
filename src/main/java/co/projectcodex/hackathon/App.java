@@ -1,5 +1,7 @@
 package co.projectcodex.hackathon;
 
+import java.util.ArrayList;
+import java.util.List;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -49,6 +51,9 @@ public class App {
 
     public static void main(String[] args) {
         try  {
+
+            List<Person> people = new ArrayList<>();
+
             staticFiles.location("/public");
             port(getHerokuAssignedPort());
 
@@ -57,7 +62,7 @@ public class App {
             get("/", (req, res) -> {
 
                 Map<String, Object> map = new HashMap<>();
-//                map.put("name", "Andre");
+                map.put("people", people);
 
                 return new ModelAndView(map, "index.handlebars");
 
@@ -66,9 +71,13 @@ public class App {
 
             post("/person", (req, res) -> {
 
-                System.out.println(req.queryParams("firstName"));
-                System.out.println(req.queryParams("lastName"));
-                System.out.println(req.queryParams("email"));
+                String firstName = req.queryParams("firstName");
+                String lastName = req.queryParams("lastName");
+                String email = req.queryParams("email");
+
+                Person person = new Person(firstName, lastName, email);
+
+                people.add(person);
 
                 res.redirect("/");
                 return "";

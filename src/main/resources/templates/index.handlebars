@@ -50,11 +50,13 @@
                     <th>Email</th>
                 </tr>
                 </thead>
+                {{#each people}}
                 <tr>
-                    <td>One</td>
-                    <td>Two</td>
-                    <td>Three</td>
+                    <td>{{firstName}}</td>
+                    <td>{{lastName}}</td>
+                    <td>{{email}}</td>
                 </tr>
+                {{/each}}
             </table>
         </div>
     </div>

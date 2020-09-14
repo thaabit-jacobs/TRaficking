@@ -7,6 +7,14 @@ public class Person {
     String lastName;
     String email;
 
+    public Person() {
+    }
+
+    public Person(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     public String getEmail() {
         return email;
