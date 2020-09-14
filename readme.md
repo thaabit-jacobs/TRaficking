@@ -4,7 +4,15 @@
 
 Fork and clone this app locally.
 
-Setup a local database using this script:
+Run the app in IntelliJ after running this command:
+
+```
+mvn clean install
+```
+
+### Database setup
+
+Setup a local database using the instructions below.
 
 
 Create  the database like this:
@@ -60,8 +68,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 ```
 
+## Heroku deployment
 
-## Heroku setup
+Deploy your application using Heroku.
 
 Create a Heroku app for your web application
 
@@ -97,5 +106,4 @@ Connect to the Heroku database using this command:
 heroku pg:psql
 ```
 
-Run the database script on the Heroku database.
-
+Run the [database script](./sql/database_script) on the Heroku database.
