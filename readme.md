@@ -1,12 +1,101 @@
 # Spark Java Postgres setup
 
+## Fork & clone this app
+
+Fork and clone this app locally.
+
+Setup a local database using this script:
+
+
+Create  the database like this:
+
+```
+createdb spark_hbs_jdbi;
+```
+
+Or like this:
+
+```
+sudo -u postgres createdb spark_hbs_jdbi;
+```
+
+Ensure your local user is a postgres user and have access to the database.
+
+Create a postgres user for your local user.
+
+```
+sudo -u postgres createuser coder -P;
+```
+
+Ensure this user has access to the database you are using the postgres user:
+
+
+```
+sudo -u postgres psql;
+```
+
+Grant access like this:
+
+```
+grant all privileges on database spark_hbs_jdbi to coder;
+```
+
+Connect to the database like this:
+
+```
+psql spark_hbs_jdbi;
+```
+
+Create the users table like this:
+
+```
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY NOT NULL,
+  first_name TEXT,
+  last_name TEXT,
+  email TEXT
+);
+```
+
+
+```
+
+
 ## Heroku setup
 
-```
+Create a Heroku app for your web application
 
+```
 heroku create
+```
 
-heroku apps:rename <your-app-name-here>
-mvn clean heroku:deploy
+Rename your Heroku application
 
 ```
+heroku apps:rename <your-app-name-here>
+```
+
+Deploy your application to Heroku using this command:
+
+```
+mvn clean heroku:deploy
+```
+
+> **Note:**  ensure you setup the Heroku database as per the instructions below.
+
+## Database setup
+
+Create the database on Heroku using this command:
+
+```
+heroku addons:create heroku-postgresql:hobby-dev
+```
+
+Connect to the Heroku database using this command:
+
+```
+heroku pg:psql
+```
+
+Run the database script on the Heroku database.
+

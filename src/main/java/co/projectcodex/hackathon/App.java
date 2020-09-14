@@ -66,8 +66,12 @@ public class App {
                     return thePeople;
                 });
 
+
                 Map<String, Object> map = new HashMap<>();
                 map.put("people", people);
+                map.put("data", "[2, 19, 3, 5, 2, 23]");
+                map.put("theGraphLabel", "The graph label");
+                map.put("labels", "['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']");
 
                 return new ModelAndView(map, "index.handlebars");
 
