@@ -105,4 +105,4 @@ Connect to the Heroku database using this command:
 heroku pg:psql
 ```
 
-Run the [database script](./sql/database_script) on the Heroku database.
+Run the `./sql/database_script` on the Heroku database.
