@@ -4,11 +4,29 @@
 
 Fork and clone this app locally.
 
+You can use this as a starting point for your Hackathon application.
+
+You can remove the current remote Git repository using this command.
+
+```
+git remote remove -v
+```
+
+You can then link this to your own GitHub repository.
+
+Ensure to add all your team members as collaborators on your projects GitHub repository.
+
+## Run the app
+
 Run the app in IntelliJ after running this command:
 
 ```
 mvn clean install
 ```
+
+This will install the application dependencies.
+
+The tests will fail initially - you will need to configure the database following the instructions below.
 
 ### Database setup
 
@@ -21,7 +39,7 @@ Create  the database like this:
 createdb spark_hbs_jdbi;
 ```
 
-Or like this:
+Or like this if you are on **Ubuntu**:
 
 ```
 sudo -u postgres createdb spark_hbs_jdbi;
@@ -31,12 +49,13 @@ Ensure your local user is a postgres user and have access to the database.
 
 Create a postgres user for your local user.
 
+> **Note:** If your username is not **coder** use the appropriate local username instead.
+
 ```
 sudo -u postgres createuser coder -P;
 ```
 
 Ensure this user has access to the database you are using the postgres user:
-
 
 ```
 sudo -u postgres psql;
@@ -48,7 +67,13 @@ Grant access like this:
 grant all privileges on database spark_hbs_jdbi to coder;
 ```
 
-Connect to the database like this:
+Exit out of `psql` using:
+
+```
+\q
+```
+
+Now connect to the database like this:
 
 ```
 psql spark_hbs_jdbi;
@@ -64,8 +89,6 @@ CREATE TABLE IF NOT EXISTS users (
   email TEXT
 );
 ```
-
-
 
 ## Heroku deployment
 
@@ -106,3 +129,10 @@ heroku pg:psql
 ```
 
 Run the `./sql/database_script` on the Heroku database.
+
+## Rename your database
+
+Once this app is up and running it proves your local configuration is working.
+
+You should now rename the database and application name. 
+And make sure it's working with your own configuration.
