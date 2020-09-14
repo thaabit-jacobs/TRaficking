@@ -44,9 +44,14 @@ public class JdbiDatabaseTest {
     public void shouldBeAbleToInsertPerson() {
 
         int counter = jdbi.withHandle(h -> {
-            h.execute("insert into users (first_name, last_name, email) values (?, ?, ?)", "name", "surname", "email");
+            h.execute("insert into users (first_name, last_name, email) values (?, ?, ?)",
+                    "Linda",
+                    "Dlamini",
+                    "linda@email.com");
 
-            int count = h.createQuery("select count(*) from users where first_name = 'name'")
+            int count = h
+                    .createQuery("select count(*) from users where first_name = ?")
+                    .bind(0, "Linda")
                     .mapTo(int.class)
                     .findOnly();
 
@@ -59,10 +64,12 @@ public class JdbiDatabaseTest {
     @Test
     public void shouldBeAbleToFindAll() {
 
+        final String INSERT_USER = "insert into users (first_name, last_name, email) values (?, ?, ?)";
+
         List<Person> people = jdbi.withHandle(h -> {
-            h.execute("insert into users (first_name, last_name, email) values (?, ?, ?)", "Name two", "LastName one", "Email one");
-            h.execute("insert into users (first_name, last_name, email) values (?, ?, ?)", "Name three", "LastName three", "Email one");
-            h.execute("insert into users (first_name, last_name, email) values (?, ?, ?)", "Name four", "LastName four", "Email one");
+            h.execute(INSERT_USER, "Name two", "LastName one", "Email one");
+            h.execute(INSERT_USER, "Name three", "LastName three", "Email one");
+            h.execute(INSERT_USER, "Name four", "LastName four", "Email one");
 
             List<Person> listPerson = h.createQuery("select first_name, last_name, email from users")
                     .mapToBean(Person.class)
@@ -72,6 +79,7 @@ public class JdbiDatabaseTest {
 
         assertEquals(3, people.size());
         assertEquals("Name three", people.get(1).getFirstName());
+        assertEquals("LastName three", people.get(1).getLastName());
     }
 
 

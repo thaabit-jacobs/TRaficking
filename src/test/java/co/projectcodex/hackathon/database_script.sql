@@ -1,3 +1,8 @@
+
+createdb spark_hbs_jdbi;
+
+psql spark_hbs_jdbi;
+
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY NOT NULL,
   first_name TEXT,

@@ -1,14 +1,13 @@
 package co.projectcodex.hackathon;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.jdbi.v3.core.Jdbi;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +21,10 @@ public class App {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 4567;
     }
 
-    static Connection getDatabaseConnection(String defualtJdbcUrl) throws URISyntaxException, SQLException {
+    static Jdbi getJdbiDatabaseConnection(String defualtJdbcUrl) throws URISyntaxException, SQLException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         String database_url = processBuilder.environment().get("DATABASE_URL");
         if (database_url != null) {
@@ -41,25 +40,31 @@ public class App {
             String path = uri.getPath();
             String url = String.format("jdbc:postgresql://%s:%s%s", host, port, path);
 
-            return DriverManager.getConnection(url, username, password);
-
+            return Jdbi.create(url, username, password);
         }
 
-        return DriverManager.getConnection(defualtJdbcUrl);
+        return Jdbi.create(defualtJdbcUrl);
 
     }
 
     public static void main(String[] args) {
         try  {
 
-            List<Person> people = new ArrayList<>();
 
             staticFiles.location("/public");
             port(getHerokuAssignedPort());
 
-//            Connection connection = getDatabaseConnection("jdbc:postgresql://localhost/spark_hbs_jdbi");
+            Jdbi jdbi = getJdbiDatabaseConnection("jdbc:postgresql://localhost/spark_hbs_jdbi");
+
 
             get("/", (req, res) -> {
+
+                List<Person> people = jdbi.withHandle((h) -> {
+                    List<Person> thePeople = h.createQuery("select first_name, last_name, email from users")
+                            .mapToBean(Person.class)
+                            .list();
+                    return thePeople;
+                });
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("people", people);
@@ -75,9 +80,12 @@ public class App {
                 String lastName = req.queryParams("lastName");
                 String email = req.queryParams("email");
 
-                Person person = new Person(firstName, lastName, email);
-
-                people.add(person);
+                jdbi.useHandle(h -> {
+                    h.execute("insert into users (first_name, last_name, email) values (?, ?, ?)",
+                            firstName,
+                            lastName,
+                            email);
+                });
 
                 res.redirect("/");
                 return "";
