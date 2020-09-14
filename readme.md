@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS users (
 ```
 
 
-```
 
 ## Heroku deployment
 
