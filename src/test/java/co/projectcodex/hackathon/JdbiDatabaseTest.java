@@ -1,5 +1,6 @@
 package co.projectcodex.hackathon;
 
+/*
 import org.jdbi.v3.core.Jdbi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,3 +85,4 @@ public class JdbiDatabaseTest {
 
 
     }
+    */

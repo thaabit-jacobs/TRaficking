@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Comfortaa');
+
+        html,
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Comfortaa', cursive;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.6);
+            max-width: 550px;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 5px;
+        }
+
+        .wrapper .input {
+            width: 85%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .searchbtn {
+            background: white;
+            width: 10%;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .searchbtn .fas {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        h1 {
+            position: absolute;
+            margin: 0;
+            line-height: 42px;
+            font-size: 42px;
+            color: #fff;
+            z-index: 2;
+        }
+
+         .banner {
+            position: relative;
+            height: 300px;
+            background-image: url("https://raw.githubusercontent.com/thaabit-jacobs/Trafficking-app/master/images/banner2.jpeg");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .banner::after {
+            content: "";
+            background-color: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .chart{
+        margin-top:4em;
+        }
+    </style>
+
+    <title>Search</title>
+
+</head>
+
+<body>
+<!-------navbar----->
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Search Area</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/report">Report Abduction</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">SAPS Alert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <form action="/search" method="POST">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <div class="banner">
+            <h1>safeGuard24/7 Abduction Report Form</h1>
+        </div>
+        <div class="wrapper">
+            <label for="locationTextField"></label>
+            <input type="text" class="input" id="locationTextField" name="location" placeholder="Search location"
+                size="50">
+
+            <button class="btn btn-secondary btn-lg" type="submit" value="Submit">
+                <div class="searchbtn"><i class="fas fa-search"></i></div>
+            </button>
+        </div>
+    </form>
+
+
+    <script>
+        function init() {
+            var input = document.getElementById('locationTextField');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+        }
+
+        google.maps.event.addDomListener(window, 'load', init);
+    </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+
+</html>
